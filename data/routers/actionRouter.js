@@ -9,9 +9,9 @@ const Actions = require('../helpers/actionModel');
 const Projects = require('../helpers/projectModel')
 
 //come back to it
-router.post('/:id/projects', (req, res) => {
+router.post('/:id/projects', validateAction,(req, res) => {
   const newAction = req.body;
-  Projects.insert({ ...newAction, project_id: req.project.id })
+  Actions.insert({ ...newAction, project_id: req.params.id })
   .then(result => {
     res.status(201).json(result)
   })
@@ -45,6 +45,7 @@ router.get('/:id', (req, res) => {
   })
 });
 
+//Get actions by id done
 router.get('/:id/actions', (req, res) => {
   Projects.getProjectActions(req.params.id)
   .then(action => {
@@ -57,7 +58,7 @@ router.get('/:id/actions', (req, res) => {
 });
 
  //put request done
-router.put('/:id', (req, res) => {
+router.put('/:id',  (req, res) => {
   const changes = req.body;
   Actions.update(req.params.id, changes)
   .then(updated => {
@@ -84,5 +85,24 @@ router.delete('/:id', (req, res) => {
 
 //middleware
 
+//Validate action
+
+function validateAction (req, res, next) {
+  // must have description <= 128 characters
+  // must have notes without size limit
+ 
+  const description = req.body.description;
+  const notes = req.body.notes;
+  
+
+  description < 1 ? res.status(400).json({ message: "description is required" }):
+  description.length > 128 ? res.status(400).json({ message: "description is too long. Needs to be 128 characters or less." }
+  ):
+
+  !notes ? res.status(400).json({ message: "missing required notes" })
+  :
+  next();
+
+}
 
 module.exports = router;
