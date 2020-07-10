@@ -8,7 +8,7 @@ const router = express.Router();
 const Actions = require('../helpers/actionModel');
 const Projects = require('../helpers/projectModel')
 
-//come back to ???
+//come back to it
 router.post('/:id/projects', (req, res) => {
   const newAction = req.body;
   Projects.insert({ ...newAction, project_id: req.project.id })
@@ -23,7 +23,6 @@ router.post('/:id/projects', (req, res) => {
 
 //Get request done
 router.get('/', (req, res) => {
-  //get request Read
   Actions.get()
   .then(action => {
     res.status(200).json(action)
@@ -43,6 +42,17 @@ router.get('/:id', (req, res) => {
   .catch(error => {
     console.log(error)
     res.status(500).json({ message: "Action ID could not be found" })
+  })
+});
+
+router.get('/:id/actions', (req, res) => {
+  Projects.getProjectActions(req.params.id)
+  .then(action => {
+    res.status(201).json(action)
+  })
+  .catch(error => {
+    console.log(error)
+    res.status(500).json({ message: "Could not find actions" })
   })
 });
 

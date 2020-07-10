@@ -20,6 +20,9 @@ router.get('/', (req, res) => {
   })
 })
 
+
+
+
 router.post('/', (req, res) => {
   Projects.insert({ name: req.body.name, description: req.body.description })
   .then(result => {
