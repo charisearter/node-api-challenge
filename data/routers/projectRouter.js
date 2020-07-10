@@ -21,7 +21,7 @@ router.get('/', (req, res) => {
 })
 
 //POST DONE 
-router.post('/', (req, res) => {
+router.post('/', validateProject, (req, res) => {
   Projects.insert({ name: req.body.name, description: req.body.description })
   .then(result => {
     res.status(201).json(result)
@@ -49,7 +49,7 @@ router.put('/:id', (req, res) => {
 router.delete('/:id', (req, res) => {
   Projects.remove(req.params.id)
   .then(project => {
-    res.status(204).json({ message: `${project} deleted` })
+    res.status(204).json(project)
   })
   .catch(error => {
     console.log(error)
@@ -58,6 +58,15 @@ router.delete('/:id', (req, res) => {
 })
 
 //middleware
-
+function validateProject (req, res, next) {
+  // must have description 
+  // must have name 
+  const description = req.body.description;
+  const name = req.body.name;
+  !description && !name ? res.status(400).json({ message: "A name and a description is required" }) :
+  !description ? res.status(400).json({ message: "description is required" }) :
+  !name ? res.status(400).json({ message: "missing required name" }) :
+  next();
+}
 
 module.exports = router;

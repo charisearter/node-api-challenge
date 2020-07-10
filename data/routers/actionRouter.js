@@ -98,7 +98,6 @@ function validateAction (req, res, next) {
   description < 1 ? res.status(400).json({ message: "description is required" }):
   description.length > 128 ? res.status(400).json({ message: "description is too long. Needs to be 128 characters or less." }
   ):
-
   !notes ? res.status(400).json({ message: "missing required notes" })
   :
   next();
