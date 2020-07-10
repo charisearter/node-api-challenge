@@ -6,15 +6,15 @@ server.use(express.json());
 
 //Projects Router
 const projectRouter = require('./data/routers/projectRouter');
-server.use('/api/posts', logger, projectRouter);
+server.use('/api/projects', logger, projectRouter);
 
 //Actions Router
 const actionRouter = require('./data/routers/actionRouter'); 
-server.use('/api/users', logger, actionRouter);
+server.use('/api/actions', logger, actionRouter);
 
 
 server.get('/', (req, res) => {
-  const message = process.env.MESSAGE;
+  const message = process.env.MESSAGE || 'Sprint 4.1';
   res.status(200).json({message});
 });
 
