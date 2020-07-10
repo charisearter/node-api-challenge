@@ -8,16 +8,16 @@ const router = express.Router();
 const Actions = require('../helpers/actionModel');
 const Projects = require('../helpers/projectModel')
 
-//come back to
-router.post('/id/actions', (req, res) => {
- const newAction = req.body
-  Actions.insert({...newAction, project_id: req.project.id })
-  .then(action => {
-    res.status(201).json(action)
+//come back to ???
+router.post('/:id/projects', (req, res) => {
+  const newAction = req.body;
+  Projects.insert({ ...newAction, project_id: req.project.id })
+  .then(result => {
+    res.status(201).json(result)
   })
-  .catch(error => {
+  .catch( error => {
     console.log(error)
-    res.status(500).json({ message: "Action could not be added" })
+    res.status(500).json({ message: "Action could not be created"})
   })
 })
 
@@ -46,7 +46,7 @@ router.get('/:id', (req, res) => {
   })
 });
 
- //put request Update
+ //put request done
 router.put('/:id', (req, res) => {
   const changes = req.body;
   Actions.update(req.params.id, changes)
