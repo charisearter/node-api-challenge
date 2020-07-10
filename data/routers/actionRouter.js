@@ -46,12 +46,20 @@ router.get('/:id', (req, res) => {
   })
 });
 
-
-router.put('/', (req, res) => {
-  //put request Update
+ //put request Update
+router.put('/:id', (req, res) => {
+  const changes = req.body;
+  Actions.update(req.params.id, changes)
+  .then(updated => {
+    res.status(200).json(updated)
+  })
+  .catch( error => {
+    console.log(error)
+    res.status(500).json({ message: " There was an error updating the action" })
+  })
 })
 
- //delete request Destroy
+ //delete request done (need to add count to message)
 router.delete('/:id', (req, res) => {
   Actions.remove(req.params.id)
   .then(action => {
