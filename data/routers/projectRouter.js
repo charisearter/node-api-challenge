@@ -20,6 +20,16 @@ router.get('/', (req, res) => {
   })
 })
 
+router.post('/', (req, res) => {
+  Projects.insert({ name: req.body.name, description: req.body.description })
+  .then(result => {
+    res.status(201).json(result)
+  })
+  .catch( error => {
+    console.log(error)
+    res.status(500).json({ message: "Project could not be created"})
+  })
+});
 
  //delete request done (need to add count to message)
 router.delete('/:id', (req, res) => {
