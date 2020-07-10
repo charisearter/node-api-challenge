@@ -7,7 +7,7 @@ const router = express.Router();
 //import user database and import post database
 const Projects = require('../helpers/projectModel')
 
-//Get request done
+//Get request DONE
 router.get('/', (req, res) => {
   //get request Read
   Projects.get()
@@ -20,7 +20,7 @@ router.get('/', (req, res) => {
   })
 })
 
-
+//POST DONE 
 router.post('/', (req, res) => {
   Projects.insert({ name: req.body.name, description: req.body.description })
   .then(result => {

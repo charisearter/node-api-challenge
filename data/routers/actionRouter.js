@@ -9,7 +9,7 @@ const Actions = require('../helpers/actionModel');
 const Projects = require('../helpers/projectModel')
 
 //come back to it
-router.post('/:id/projects', validateAction,(req, res) => {
+router.post('/:id/actions', validateAction,(req, res) => {
   const newAction = req.body;
   Actions.insert({ ...newAction, project_id: req.params.id })
   .then(result => {
@@ -70,11 +70,11 @@ router.put('/:id',  (req, res) => {
   })
 })
 
- //delete request done (need to add count to message)
+ //delete request done 
 router.delete('/:id', (req, res) => {
   Actions.remove(req.params.id)
   .then(action => {
-    res.status(204).json({ message: `${action} deleted` })
+    res.status(204).json({ message: `${action.id}:${action.name} was deleted` })
   })
   .catch(error => {
     console.log(error)
