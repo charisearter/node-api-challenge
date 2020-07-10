@@ -1,5 +1,4 @@
 //Action router
-//Project Router
 
 const express = require('express');
 
@@ -14,6 +13,7 @@ router.post('/', (req, res) => {
   //post request Create
 })
 
+//Get request done
 router.get('/', (req, res) => {
   //get request Read
   Actions.get()
@@ -25,6 +25,18 @@ router.get('/', (req, res) => {
     res.status(500).json({ message: " There was an error getting the actions." })
   })
 })
+
+//Get request done
+router.get('/:id', (req, res) => {
+  Actions.get(req.params.id)
+  .then(action => {
+    res.status(200).json(action)
+  })
+  .catch(error => {
+    console.log(error)
+    res.status(500).json({ message: "Action ID could not be found" })
+  })
+});
 
 
 router.put('/', (req, res) => {
